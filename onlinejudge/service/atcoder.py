@@ -583,14 +583,14 @@ class AtCoderProblemData(ProblemData):
             assert False
 
         # When login as the admin, a link is added after memory limit. See https://github.com/online-judge-tools/api-client/issues/90
-        parsed_memory_limit = re.search(r'^(メモリ制限|Memory Limit): ([0-9.]+) (KB|MB)', memory_limit)
+        parsed_memory_limit = re.search(r'^(メモリ制限|Memory Limit): ([0-9.]+) (KB|MB|MiB)', memory_limit)
         assert parsed_memory_limit
 
         memory_limit_value = parsed_memory_limit.group(2)
         memory_limit_unit = parsed_memory_limit.group(3)
         if memory_limit_unit == 'KB':
             memory_limit_byte = int(float(memory_limit_value) * 1000)
-        elif memory_limit_unit == 'MB':
+        elif memory_limit_unit in ('MB', 'MiB'):
             memory_limit_byte = int(float(memory_limit_value) * 1000 * 1000)
         else:
             assert False
